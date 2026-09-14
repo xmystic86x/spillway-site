@@ -109,6 +109,14 @@ section{padding:4.2rem 0}
 .help a{color:var(--blue);font-weight:700;text-decoration:none;font-size:1rem}
 .help .addr{font-size:.92rem;line-height:1.6;font-weight:500;color:var(--ink)}
 
+/* contact form */
+.cform{max-width:640px;margin-top:2.4rem}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.cform input[type=text],.cform input[type=email],.cform textarea{width:100%;font-family:inherit;font-size:.92rem;padding:.85rem 1rem;border:1.5px solid var(--line);border-radius:10px;color:var(--ink);background:#fff}
+.cform input:focus,.cform textarea:focus{outline:none;border-color:var(--blue)}
+.cform textarea{margin-bottom:1.2rem;resize:vertical}
+@media(max-width:560px){.frow{grid-template-columns:1fr}}
+
 /* footer */
 footer{background:var(--navy);color:#8fa9c6;padding:2.8rem 0 3.2rem;font-size:.78rem;line-height:1.75;margin-top:4rem}
 footer a{color:#8fa9c6}
@@ -283,8 +291,24 @@ footer a{color:#8fa9c6}
     <div class="head">
       <div class="kick">No Cost, No Obligation</div>
       <h2>Request a Free Search</h2>
-      <p class="lede">Send your company's legal name — with former names and subsidiaries — and the states where you have operated. We will run the search and report a summary of what we find.</p>
+      <p class="lede">Tell us your company's legal name — with former names and subsidiaries — and the states where you have operated. We will run the search and report a summary of what we find.</p>
     </div>
+    <form class="cform" action="https://formsubmit.co/ariaz@tarbela.com" method="POST">
+      <input type="hidden" name="_subject" value="Search Request — spillwayrecovery.com">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_next" value="https://www.spillwayrecovery.com/thanks.html">
+      <input type="text" name="_honey" style="display:none">
+      <div class="frow">
+        <input type="text" name="name" placeholder="Your name" required>
+        <input type="email" name="email" placeholder="Work email" required>
+      </div>
+      <div class="frow">
+        <input type="text" name="company" placeholder="Company legal name" required>
+        <input type="text" name="states" placeholder="States where you've operated">
+      </div>
+      <textarea name="details" rows="4" placeholder="Former names, subsidiaries, predecessor entities — anything that helps the search"></textarea>
+      <button type="submit" class="pill" style="border:none;cursor:pointer;font-family:inherit">Run My Free Search</button>
+    </form>
     <div class="help">
       <div>
         <div class="ic"><svg viewBox="0 0 24 24"><path d="M3 6h18v12H3z"/><path d="M3 7l9 6 9-6"/></svg></div>
