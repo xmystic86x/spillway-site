@@ -123,21 +123,6 @@ footer a{color:#8fa9c6}
 .fmark{font-weight:800;font-size:1.25rem;color:#fff;margin-bottom:1rem}
 .fmark span{color:#7fa8e8}
 @media(max-width:640px){.navmail{display:none}}
-
-/* chat widget */
-#sw-chat-btn{position:fixed;bottom:22px;right:22px;width:58px;height:58px;border-radius:50%;background:var(--blue);border:none;cursor:pointer;box-shadow:0 6px 20px rgba(22,63,105,.3);display:flex;align-items:center;justify-content:center;z-index:100}
-#sw-chat-btn:hover{background:var(--blue-dk)}
-#sw-chat{position:fixed;bottom:92px;right:22px;width:350px;max-width:calc(100vw - 32px);height:480px;max-height:calc(100vh - 120px);background:#fff;border-radius:16px;box-shadow:0 12px 44px rgba(22,63,105,.28);display:none;flex-direction:column;overflow:hidden;z-index:100;font-size:.9rem}
-#sw-chat.open{display:flex}
-.swc-head{background:var(--navy);color:#fff;padding:.9rem 1.1rem;font-weight:700}
-.swc-head small{display:block;font-weight:500;font-size:.72rem;color:#9fb8d6}
-.swc-msgs{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:.6rem}
-.swc-m{max-width:85%;padding:.6rem .85rem;border-radius:12px;line-height:1.5}
-.swc-m.bot{background:#eef3fa;color:var(--ink);align-self:flex-start;border-bottom-left-radius:4px}
-.swc-m.user{background:var(--blue);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
-.swc-in{display:flex;border-top:1px solid var(--line)}
-.swc-in input{flex:1;border:none;padding:.9rem 1rem;font-family:inherit;font-size:.9rem;outline:none}
-.swc-in button{border:none;background:none;color:var(--blue);font-weight:700;padding:0 1.1rem;cursor:pointer;font-family:inherit}
 </style>
 </head>
 <body>
@@ -346,42 +331,6 @@ footer a{color:#8fa9c6}
     <a href="/privacy.html">Privacy</a> &middot; <a href="/terms.html">Terms</a> &middot; &copy; 2026 Spillway Recovery LLC. All rights reserved.
   </div>
 </footer>
-
-<!-- CHAT WIDGET -->
-<button id="sw-chat-btn" aria-label="Chat with us">
-  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 01-8 8H5l-2 2V12a8 8 0 018-8h2a8 8 0 018 8z"/></svg>
-</button>
-<div id="sw-chat" role="dialog" aria-label="Chat">
-  <div class="swc-head">Spillway Recovery<small>AI assistant — answers in seconds, 24/7</small></div>
-  <div class="swc-msgs" id="swc-msgs">
-    <div class="swc-m bot">Hi — I'm Spillway's AI assistant. Ask me anything about how corporate unclaimed-asset recovery works, or about a letter you received from us.</div>
-  </div>
-  <div class="swc-in">
-    <input id="swc-input" type="text" placeholder="Type your question..." maxlength="1000">
-    <button id="swc-send">Send</button>
-  </div>
-</div>
-<script>
-(function(){
-  var btn=document.getElementById('sw-chat-btn'),panel=document.getElementById('sw-chat'),
-      msgs=document.getElementById('swc-msgs'),input=document.getElementById('swc-input'),
-      send=document.getElementById('swc-send'),history=[],busy=false;
-  btn.addEventListener('click',function(){panel.classList.toggle('open');if(panel.classList.contains('open'))input.focus();});
-  function add(role,text){var d=document.createElement('div');d.className='swc-m '+(role==='user'?'user':'bot');d.textContent=text;msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;return d;}
-  function go(){
-    if(busy)return;var q=input.value.trim();if(!q)return;
-    input.value='';add('user',q);history.push({role:'user',content:q});busy=true;
-    var t=add('bot','...');
-    fetch('/api/chat',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({messages:history})})
-      .then(function(r){return r.json();})
-      .then(function(d){var reply=(d&&d.reply)||'Sorry — please email inquiries@spillwayrecovery.com.';t.textContent=reply;history.push({role:'assistant',content:reply});})
-      .catch(function(){t.textContent='Sorry — connection issue. Please email inquiries@spillwayrecovery.com or use the form above.';})
-      .finally(function(){busy=false;msgs.scrollTop=msgs.scrollHeight;});
-  }
-  send.addEventListener('click',go);
-  input.addEventListener('keydown',function(e){if(e.key==='Enter')go();});
-})();
-</script>
 
 </body>
 </html>
